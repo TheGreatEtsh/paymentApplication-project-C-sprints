@@ -107,14 +107,14 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
     yy_t=atoi(stryy_t);
    // printf ("\n %d %d  \n",mm_t,yy_t);
     /////////////////////////////////////////////////////////////////////////////
-    printf(" \nReceivedExpiration date  %s\n",cardData->cardExpirationDate);
+    printf(" \nReceivedExpiration date  %s\n",cardData->cardExpirationData);
     /////////////////////////////////////////////////////////////////////////////
-    strmm_c[0]=cardData->cardExpirationDate[0]; //m
-    strmm_c[1]=cardData->cardExpirationDate[1]; //mm
+    strmm_c[0]=cardData->cardExpirationData[0]; //m
+    strmm_c[1]=cardData->cardExpirationData[1]; //mm
     stryy_c[2]=0;
     mm_c=atoi(strmm_c);
-    stryy_c[0]=cardData->cardExpirationDate[3]; //y
-    stryy_c[1]=cardData->cardExpirationDate[4]; //yy
+    stryy_c[0]=cardData->cardExpirationData[3]; //y
+    stryy_c[1]=cardData->cardExpirationData[4]; //yy
     stryy_c[2]=0;
     yy_c=atoi(stryy_c);
    // printf ("\n %d %d  \n",mm_c,yy_c);

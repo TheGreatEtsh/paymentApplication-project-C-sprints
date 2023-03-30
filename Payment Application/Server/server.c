@@ -1,3 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NONSTDC_NO_WARNINGS
+
 #include "server.h"
 #include "stddef.h"
 #include "stdio.h"
@@ -8,6 +11,7 @@ ST_accountsDB_t accountsDB[DB_SIZE] = { {2000.0,	RUNNING, "8989374615436851"},
 										{100.0,		RUNNING, "1233454406049895"},
 										{2500.0,	RUNNING, "5773046589566969"},
 										{30000.0,	RUNNING, "5402546398124536"} };
+
 
 
 ST_transaction_t transactionData[TD_SIZE] = { {0,0,0,0} };
@@ -32,9 +36,7 @@ EN_serverError_t isValidAccount(ST_cardData_t* cardData, ST_accountsDB_t* accoun
 	if (compare)
 	{
 		functionReturn = ACCOUNT_NOT_FOUND;
-		accountRefrence->balance = 0;
-		accountRefrence->primaryAccountNumber[0] = 0;
-		accountRefrence->state = 0;
+		accountRefrence = NULL;
 	}
 	else
 	{
@@ -90,7 +92,7 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t* termData, ST_accountsDB_t*
 
 EN_serverError_t saveTransaction(ST_transaction_t* transData)
 {
-	static uint8_t transactionIndex = 0;
+	static uint16_t transactionIndex = 0;
 	if (transactionIndex < TD_SIZE)
 	{
 		transactionData[transactionIndex].transactionSequenceNumber = transactionIndex + 1;
@@ -106,13 +108,12 @@ EN_serverError_t saveTransaction(ST_transaction_t* transData)
 		transactionData[transactionIndex].terminalData.transAmount = transData->terminalData.transAmount;
 
 		transactionIndex++;
-
-		listSavedTransactions();
 	}
 	else
 	{
-		listSavedTransactions;
+		/*DO NOTHING*/
 	}
+	listSavedTransactions();
 	return SERVER_OK;
 }
 
@@ -122,7 +123,7 @@ void listSavedTransactions(void)
 	printf("TransactionSequence | TransactionDate | CardHolderName | \tPAN\t | TransactionAmount | TransactionState\n");
 	while (transactionData[transactionIndex].transactionSequenceNumber)
 	{
-		printf("%d | %s | %s | %s | %f | ", transactionData[transactionIndex].transactionSequenceNumber
+		printf("%d| %s | %s | %s | %0.1f | ", transactionData[transactionIndex].transactionSequenceNumber
 										, transactionData[transactionIndex].terminalData.transactionDate
 										, transactionData[transactionIndex].cardHolderData.cardHolderName
 										, transactionData[transactionIndex].cardHolderData.primaryAcountNumber
@@ -136,6 +137,7 @@ void listSavedTransactions(void)
 		case FRAUD_CARD:					printf("FRAUD_CARD\n");						break;
 		case INTERNAL_SERVER_ERROR:			printf("INTERNAL_SERVER_ERROR\n");			break;
 		}
+		transactionIndex++;
 	}
 }
 

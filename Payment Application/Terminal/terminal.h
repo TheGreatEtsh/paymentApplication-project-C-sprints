@@ -1,7 +1,7 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
-
-#include "terminal_test.h"
+#include "..\Card\card.h"
+//#include "terminal_test.h"
 typedef struct ST_terminalData_t
 {
     float transAmount;
