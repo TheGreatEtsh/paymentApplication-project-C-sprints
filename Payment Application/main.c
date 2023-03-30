@@ -5,6 +5,7 @@ int main()
 	isValidAccountTest();
 	isBlockedAccountTest();
 	isAmountAvailableTest();
-	saveTransactionTest();
+	//saveTransactionTest();
+	listSavedTransactionsTest();
 	return 0;
 }
