@@ -159,5 +159,16 @@ void	saveTransactionTest(void)
 	printf(".\n.\n.\n.\n");
 }
 
-void	listSavedTransactionsTest(void);
+void	listSavedTransactionsTest(void)
+{
+	printf("Tester Name: Ahmed Mohamed Hesham\n");
+	printf("Function Name : listSavedTransactionsTest\n");
+	printf("Test Case 1 :\n");
+	printf("Input Data : no transactions history \n");
+	printf("Expected Result: transactions details without history of transactions\n");
+	printf("Acutal Result: \n");
+	listSavedTransactions();
+	printf(".\n.\n.\n.\n");
+
+}
 void	recieveTransactionDataTest(void);

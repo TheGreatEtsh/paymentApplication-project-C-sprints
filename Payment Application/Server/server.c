@@ -124,10 +124,10 @@ void listSavedTransactions(void)
 	while (transactionData[transactionIndex].transactionSequenceNumber)
 	{
 		printf("%d| %s | %s | %s | %0.1f | ", transactionData[transactionIndex].transactionSequenceNumber
-										, transactionData[transactionIndex].terminalData.transactionDate
-										, transactionData[transactionIndex].cardHolderData.cardHolderName
-										, transactionData[transactionIndex].cardHolderData.primaryAcountNumber
-										, transactionData[transactionIndex].terminalData.transAmount);
+											, transactionData[transactionIndex].terminalData.transactionDate
+											, transactionData[transactionIndex].cardHolderData.cardHolderName
+											, transactionData[transactionIndex].cardHolderData.primaryAcountNumber
+											, transactionData[transactionIndex].terminalData.transAmount);
 		
 		switch (transactionData[transactionIndex].transState)
 		{
