@@ -1,6 +1,7 @@
 
 #include "serverTest.h"
 extern ST_accountsDB_t accountsDB[DB_SIZE];
+extern ST_transaction_t transactionData[TD_SIZE];
 
 void	isValidAccountTest(void)
 {
@@ -166,6 +167,52 @@ void	listSavedTransactionsTest(void)
 	printf("Test Case 1 :\n");
 	printf("Input Data : no transactions history \n");
 	printf("Expected Result: transactions details without history of transactions\n");
+	printf("Acutal Result: \n");
+	listSavedTransactions();
+	printf(".\n.\n.\n.\n");
+
+	transactionData[0].transactionSequenceNumber = 1;
+	strcpy(transactionData[0].terminalData.transactionDate, "10/04/2023");
+	strcpy(transactionData[0].cardHolderData.cardHolderName, "Ahmed Mohamed Hesham");
+	strcpy(transactionData[0].cardHolderData.primaryAcountNumber, "9999888877776666");
+	transactionData[0].transState = DECLINED_STOLEN_CARD;
+	transactionData[0].terminalData.transAmount = 200;
+
+	printf("Tester Name: Ahmed Mohamed Hesham\n");
+	printf("Function Name : listSavedTransactionsTest\n");
+	printf("Test Case 2 :\n");
+	printf("Input Data : adding one transaction \n");
+	printf("Expected Result: transactions details with history of one transaction\n");
+	printf("Acutal Result: \n");
+	listSavedTransactions();
+	printf(".\n.\n.\n.\n");
+
+	transactionData[1].transactionSequenceNumber = 2;
+	strcpy(transactionData[1].terminalData.transactionDate, "10/04/2023");
+	strcpy(transactionData[1].cardHolderData.cardHolderName, "Ahmed Mohamed Hesham");
+	strcpy(transactionData[1].cardHolderData.primaryAcountNumber, "9999888877776666");
+	transactionData[1].transState = DECLINED_STOLEN_CARD;
+	transactionData[1].terminalData.transAmount = 200;
+
+	transactionData[2].transactionSequenceNumber = 3;
+	strcpy(transactionData[2].terminalData.transactionDate, "10/04/2023");
+	strcpy(transactionData[2].cardHolderData.cardHolderName, "Ahmed Mohamed Hesham");
+	strcpy(transactionData[2].cardHolderData.primaryAcountNumber, "9999888877776666");
+	transactionData[2].transState = DECLINED_STOLEN_CARD;
+	transactionData[2].terminalData.transAmount = 200;
+   
+	transactionData[3].transactionSequenceNumber = 4;
+	strcpy(transactionData[3].terminalData.transactionDate, "10/04/2023");
+	strcpy(transactionData[3].cardHolderData.cardHolderName, "Ahmed Mohamed Hesham");
+	strcpy(transactionData[3].cardHolderData.primaryAcountNumber, "9999888877776666");
+	transactionData[3].transState = DECLINED_STOLEN_CARD;
+	transactionData[3].terminalData.transAmount = 200;
+
+	printf("Tester Name: Ahmed Mohamed Hesham\n");
+	printf("Function Name : listSavedTransactionsTest\n");
+	printf("Test Case 3 :\n");
+	printf("Input Data : adding three more transaction \n");
+	printf("Expected Result: transactions details with history of four transaction\n");
 	printf("Acutal Result: \n");
 	listSavedTransactions();
 	printf(".\n.\n.\n.\n");
