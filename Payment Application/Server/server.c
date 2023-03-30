@@ -1,5 +1,7 @@
 #include "server.h"
 #include "stddef.h"
+#include "stdio.h"
+#include "string.h"
 
 ST_accountsDB_t accountsDB[DB_SIZE] = { {2000.0,	RUNNING, "8989374615436851"},
 										{100000.0,	BLOCKED, "5807007076043875"},
@@ -14,63 +16,45 @@ EN_transState_t	recieveTransactionData(ST_transaction_t* transData)
 {
 	uint32_t sequenceNumber = 0;
 	uint8_t cardName[25], PAN[20], expiryDate[6];
-	
+
 
 	sequenceNumber = transData->transactionSequenceNumber;
+
+	strcpy(expiryDate, transData->cardHolderData.cardExpirationData);
 	
-	for (uint8_t i = 0; i < 6; i++)
-	{
-		expiryDate[i] = transData->cardHolderData->cardExpirationDate[i];
-	}
-	for (uint8_t i = 0; i < 20; i++)
-	{
-		PAN[i] = transData->cardHolderData->primaryAccountNumber[i];
-	}
-	for (uint8_t i = 0; i < strlen(transData->cardHolderData->cardHolderName); i++)
-	{
-		expiryDate[i] = transData->cardHolderData->cardHolderName[i];
-	}
+	strcpy(PAN, transData->cardHolderData.primaryAcountNumber);
+	
+	strcpy(cardName, transData->cardHolderData.cardHolderName);
+	
 
 
 }
 
 EN_serverError_t isValidAccount(ST_cardData_t* cardData, ST_accountsDB_t* accountRefrence)
 {
-	uint8_t PAN[20];
-	uint8_t match = 0, reference = 0, functionReturn = 0;
+	uint8_t PAN[20] = {0};
+	uint8_t compare = 0, reference = 0, functionReturn = 0;
 
-	for ( reference = 0; reference < 20; reference++)
-	{
-		PAN[reference] = cardData->cardHolderData.primaryAccountNumber[reference];
-	}
+	accountRefrence = accountsDB;
 
-	reference = 0;
+	strcpy(PAN, cardData->primaryAcountNumber);
 	
-	for ( reference = 0; reference < DB_SIZE; reference++)
+	for (; reference < DB_SIZE; reference++)
 	{
-		match = 0;
-		for (uint8_t j = 0; PAN[j]; j++)
-		{
-			if (PAN[j] == accountRefrence[reference].primaryAccountNumber[j])
-			{
-				match++;
-			}
-			if (match == 16)
-			{
-				break;
-			}
-		}
-		if (match == 16)
+		compare = strcmp(PAN, accountRefrence[reference].primaryAccountNumber);
+		if (!compare)
 		{
 			break;
 		}
+		
 	}
-	if (match < 16)
+	
+	if (compare)
 	{
 		functionReturn = ACCOUNT_NOT_FOUND;
 		accountRefrence = NULL;
 	}
-	else if (match == 16)
+	else
 	{
 		functionReturn = SERVER_OK;
 		accountRefrence = accountRefrence + reference;
@@ -82,7 +66,7 @@ EN_serverError_t isValidAccount(ST_cardData_t* cardData, ST_accountsDB_t* accoun
 
 EN_serverError_t	isBlockedAccount(ST_accountsDB_t* accountRefrence)
 {
-	uint8_t accountState = 0, functionReturn;
+	uint8_t accountState = 0, functionReturn = 0;
 	accountState = accountRefrence->state;
 	if (accountState == RUNNING)
 	{
@@ -123,15 +107,51 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t* termData, ST_accountsDB_t*
 EN_serverError_t	saveTransaction(ST_transaction_t* transData)
 {
 	static uint8_t transactionIndex = 0;
-	transactionData[transactionIndex].transactionSequenceNumber = transactionIndex;
-	for (uint8_t i = 0; i < 11; i++)
+	uint8_t i = 0;
+	transactionData[transactionIndex].transactionSequenceNumber = transactionIndex+1;
+	
+	for (i = 0; i < 11; i++)
 	{
 		transactionData[transactionIndex].terminalData.transactionDate[i] = transData->terminalData.transactionDate[i];
 	}
+	
+	for (i = 0; transData->cardHolderData.cardHolderName[i]; i++)
+	{
+		transactionData[transactionIndex].cardHolderData.cardHolderName[i] = transData->cardHolderData.cardHolderName[i];
+	}
+	transactionData[transactionIndex].cardHolderData.cardHolderName[i] = '\0';
+
+	for (i = 0; transactionData[transactionIndex].cardHolderData.primaryAcountNumber[i]; i++)
+	{
+		transactionData[transactionIndex].cardHolderData.primaryAcountNumber[i] = transData->cardHolderData.primaryAcountNumber[i];
+	}
+	transactionData[transactionIndex].cardHolderData.primaryAcountNumber[i] = '\0';
+
 	transactionData[transactionIndex].transState = transData->transState;
 	transactionData[transactionIndex].terminalData.transAmount = transData->terminalData.transAmount;
-	
-	
+
 	transactionIndex++;
 }
 
+void listSavedTransactions(void)
+{
+	uint8_t transactionIndex = 0;
+	printf("TransactionSequence | TransactionDate | CardHolderName | \tPAN\t | TransactionAmount | TransactionState\n");
+	while (transactionData[transactionIndex].transactionSequenceNumber)
+	{
+		printf("%d | %s | %s | %s | %d | ", transactionData[transactionIndex].transactionSequenceNumber
+										, transactionData[transactionIndex].terminalData.transactionDate
+										, transactionData[transactionIndex].cardHolderData.cardHolderName
+										, transactionData[transactionIndex].cardHolderData.primaryAcountNumber
+										, transactionData[transactionIndex].terminalData.transAmount);
+		
+		switch (transactionData[transactionIndex].transState)
+		{
+		case APPROVED:						printf("APPROVED\n");						break;
+		case DECLINED_INSUFFECIENT_FUN:		printf("DECLINED_INSUFFECIENT_FUN\n");		break;
+		case DECLINED_STOLEN_CARD:			printf("DECLINED_STOLEN_CARD\n");			break;
+		case FRAUD_CARD:					printf("FRAUD_CARD\n");						break;
+		case INTERNAL_SERVER_ERROR:			printf("INTERNAL_SERVER_ERROR\n");			break;
+		}
+	}
+}

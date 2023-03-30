@@ -1,6 +1,6 @@
 #ifndef CARD_H
 #define CARD_H
-#include "STD_TYPES.h"
+#include "..\Lib\standardTypes.h"
 #include "stdio.h"
 typedef struct ST_cardData_t
 {
