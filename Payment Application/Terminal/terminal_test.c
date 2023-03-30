@@ -61,8 +61,8 @@ void getTransactionAmountTest(void)
 /////////////////////////////////////////////////////////////////////////////
 void isBelowMaxAmountTest(void)
 {
-    printf ("Enter Transaction Amount:  ") ;
-    scanf ("%f",&test_terminal.transAmount);
+    printf (" Received Transaction Amount:  ") ;
+    printf ("%f\n",test_terminal.transAmount);
 
     if  (isBelowMaxAmount(&test_terminal)== EXCEED_MAX_AMOUNT )
     {
@@ -86,6 +86,6 @@ void setMaxAmountTest(void)
     }
     else
     {
-        printf ("\n<<<<Valid Transaction Amount >>> \n\n") ;
+        printf ("\n<<<<Valid  max Transaction Amount to set >>> \n\n") ;
     }
 }

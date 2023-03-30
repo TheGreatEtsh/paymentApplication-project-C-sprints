@@ -32,7 +32,7 @@ int32_t stringToInt(uint8_t*str,int32_t*pnum)
     return 1;
 }
 /////////////////////////////////////////////////////////////////////
-EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
+EN_terminalError_t getTransactionDate(ST_terminalData_t *termData) //dd/mm/yyyy
 {
     uint8_t strdd [3],strmm[3],stryyyy[5];
     int32_t dd,mm,yyyy;
@@ -41,7 +41,6 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
     if ( Stringlen_H (termData->transactionDate) > 10)
     {
         status= WRONG_DATE;
-        printf("here1");
 
     }
     else if ( Stringlen_H (termData->transactionDate) < 10)
@@ -105,7 +104,7 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
     stryy_t[1]=termData->transactionDate[9]; //yy
     stryy_t[2]=0;
     yy_t=atoi(stryy_t);
-   // printf ("\n %d %d  \n",mm_t,yy_t);
+    // printf ("\n %d %d  \n",mm_t,yy_t);
     /////////////////////////////////////////////////////////////////////////////
     printf(" \nReceivedExpiration date  %s\n",cardData->cardExpirationData);
     /////////////////////////////////////////////////////////////////////////////
@@ -117,29 +116,29 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
     stryy_c[1]=cardData->cardExpirationData[4]; //yy
     stryy_c[2]=0;
     yy_c=atoi(stryy_c);
-   // printf ("\n %d %d  \n",mm_c,yy_c);
+    // printf ("\n %d %d  \n",mm_c,yy_c);
     if (yy_c>yy_t )
     {
         status= TERMINAL_OK;
-       // printf("HERE0\n");
+        // printf("HERE0\n");
     }
     else if (yy_c==yy_t)
     {
         if (mm_c>= mm_t)
         {
             status= TERMINAL_OK;
-           // printf("HERE1\n");
+            // printf("HERE1\n");
         }
         else
         {
             status= EXPIRED_CARD;
-           // printf("HERE2\n");
+            // printf("HERE2\n");
         }
     }
     else
     {
         status= EXPIRED_CARD;
-       // printf("HERE3\n");
+        // printf("HERE3\n");
     }
     return status;
 }
@@ -187,6 +186,7 @@ EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData)
 EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData)
 {
     EN_terminalError_t status ;
+   // printf ("\nfrom fun : %f",termData->transAmount );
     if (termData->transAmount > termData->maxTransAmount)
     {
         status= EXCEED_MAX_AMOUNT;
