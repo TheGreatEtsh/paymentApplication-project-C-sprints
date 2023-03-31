@@ -1,13 +1,7 @@
-#include "Server/serverTest.h"
-
+#include "Application/app.h"
 int main()
 {
-	//isValidAccountTest();
-	//isBlockedAccountTest();
-	//isAmountAvailableTest();
-	//saveTransactionTest();
-	//listSavedTransactionsTest();
-	recieveTransactionDataTest();
+	userStory();
 	return 0;
 
 }
