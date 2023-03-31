@@ -6,11 +6,11 @@
 #include "stdio.h"
 #include "string.h"
 
-ST_accountsDB_t accountsDB[DB_SIZE] = { {2000.0,	RUNNING, "8989374615436851"},
-										{100000.0,	BLOCKED, "5807007076043875"},
-										{100.0,		RUNNING, "1233454406049895"},
-										{2500.0,	RUNNING, "5773046589566969"},
-										{30000.0,	RUNNING, "5402546398124536"} };
+ST_accountsDB_t accountsDB[DB_SIZE] = { {2000.0,	RUNNING, "1111000011110000"},
+										{100000.0,	BLOCKED, "0000111100001111"},
+										{100.0,		RUNNING, "1111222211112222"},
+										{2500.0,	RUNNING, "2222111122221111"},
+										{30000.0,	RUNNING, "2222333322223333"} };
 
 
 
