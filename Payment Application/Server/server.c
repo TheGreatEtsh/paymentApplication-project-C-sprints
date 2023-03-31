@@ -28,6 +28,10 @@ EN_serverError_t isValidAccount(ST_cardData_t* cardData, ST_accountsDB_t* accoun
 		compare = strcmp(PAN, accountsDB[reference].primaryAccountNumber);
 		if (!compare)
 		{
+			strcpy(accountRefrence->primaryAccountNumber, accountsDB[reference].primaryAccountNumber);
+			accountRefrence->balance = accountsDB[reference].balance;
+			accountRefrence->state = accountsDB[reference].state;
+			
 			break;
 		}
 		
@@ -41,9 +45,7 @@ EN_serverError_t isValidAccount(ST_cardData_t* cardData, ST_accountsDB_t* accoun
 	else
 	{
 		functionReturn = SERVER_OK;
-		strcpy(accountRefrence->primaryAccountNumber, accountsDB[reference].primaryAccountNumber);
-		accountRefrence->balance = accountsDB[reference].balance;
-		accountRefrence->state = accountsDB[reference].state;
+		
 	}
 
 	return functionReturn;
@@ -78,7 +80,7 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t* termData, ST_accountsDB_t*
 	transAmount = termData->transAmount;
 	balance = accountRefrence->balance;
 	
-	if (balance > transAmount)
+	if (balance >= transAmount)
 	{
 		checkAmount = SERVER_OK;
 	}
@@ -95,7 +97,7 @@ EN_serverError_t saveTransaction(ST_transaction_t* transData)
 	static uint16_t transactionIndex = 0;
 	if (transactionIndex < TD_SIZE)
 	{
-		transactionData[transactionIndex].transactionSequenceNumber = transactionIndex + 1;
+		transactionData[transactionIndex].transactionSequenceNumber = transactionIndex+1;
 
 		strcpy(transactionData[transactionIndex].terminalData.transactionDate, transData->terminalData.transactionDate);
 
@@ -143,15 +145,16 @@ void listSavedTransactions(void)
 
 EN_transState_t	recieveTransactionData(ST_transaction_t* transData)
 {
-	uint32_t sequenceNumber = 0;
-	uint8_t cardName[25], PAN[20], expiryDate[6];
-	float amount = 0;
+	
+	uint8_t  PAN[20];
 	uint8_t accountValidty = 0, amountAvailability = 0, accountState = 0, functionReturn = 0;
 	ST_accountsDB_t accReference;
 
 	strcpy(PAN,	transData->cardHolderData.primaryAcountNumber);
-	
+
+
 	accountValidty = isValidAccount(&transData->cardHolderData, &accReference);
+	
 
 	accountState = isBlockedAccount(&accReference);
 
@@ -184,7 +187,7 @@ EN_transState_t	recieveTransactionData(ST_transaction_t* transData)
 	
 	transData->transState = functionReturn;
 
-	saveTransaction(&transData);
+	saveTransaction(transData);
 
 	return functionReturn;
 	

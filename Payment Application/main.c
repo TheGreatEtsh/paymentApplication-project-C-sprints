@@ -2,10 +2,12 @@
 
 int main()
 {
-	isValidAccountTest();
-	isBlockedAccountTest();
-	isAmountAvailableTest();
+	//isValidAccountTest();
+	//isBlockedAccountTest();
+	//isAmountAvailableTest();
 	//saveTransactionTest();
-	listSavedTransactionsTest();
+	//listSavedTransactionsTest();
+	recieveTransactionDataTest();
 	return 0;
+
 }

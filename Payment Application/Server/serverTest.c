@@ -218,4 +218,51 @@ void	listSavedTransactionsTest(void)
 	printf(".\n.\n.\n.\n");
 
 }
-void	recieveTransactionDataTest(void);
+void	recieveTransactionDataTest(void)
+{
+	ST_transaction_t transData;
+	uint8_t recieveReturn = 0;
+
+
+	printf("Tester Name: Ahmed Mohamed Hesham\n");
+	printf("Function Name : recieveTransactionTest\n");
+	printf("Test Case 1 :\n");
+	printf("Input Data : transaction Date, card holder name, wrong PAN, transAmount \n");
+	printf("Expected Result: transactions Details + history + FRAUD_CARD  \n");
+	printf("Acutal Result: \n");
+	strcpy(transData.terminalData.transactionDate, "10/04/2023");
+	strcpy(transData.cardHolderData.cardHolderName, "Ahmed Mohamed Hesham");
+	strcpy(transData.cardHolderData.primaryAcountNumber, "9999888877776666");
+	transData.terminalData.transAmount = 1000;
+	recieveReturn = recieveTransactionData(&transData);
+	printf(".\n.\n.\n.\n");
+
+	printf("Tester Name: Ahmed Mohamed Hesham\n");
+	printf("Function Name : recieveTransactionTest\n");
+	printf("Test Case 2 :\n");
+	printf("Input Data : true PAN + last inputs + updates after calling the function\n");
+	printf("Expected Result: transactions Details + history + Account balance updated + APPROVED  \n");
+	printf("Acutal Result: \n");
+	strcpy(transData.cardHolderData.primaryAcountNumber, accountsDB->primaryAccountNumber);
+	recieveReturn = recieveTransactionData(&transData);
+	printf(".\n.\n.\n.\n");
+
+	printf("Tester Name: Ahmed Mohamed Hesham\n");
+	printf("Function Name : recieveTransactionTest\n");
+	printf("Test Case 3 :\n");
+	printf("Input Data : same last inputs + updates after calling the function\n");
+	printf("Expected Result: transactions Details + history + Account balance updated + APPROVED  \n");
+	printf("Acutal Result: \n");
+	recieveReturn = recieveTransactionData(&transData);
+	printf(".\n.\n.\n.\n");
+
+	printf("Tester Name: Ahmed Mohamed Hesham\n");
+	printf("Function Name : recieveTransactionTest\n");
+	printf("Test Case 4 :\n");
+	printf("Input Data : same last inputs + updates after calling the function\n");
+	printf("Expected Result: transactions Details + history + Account balance updated + DECLINED INSUFFICENT FUND \n");
+	printf("Acutal Result: \n");
+	recieveReturn = recieveTransactionData(&transData);
+	printf(".\n.\n.\n.\n");
+
+}
