@@ -111,9 +111,6 @@ void	saveTransactionTest(void)
 	saveTransaction(&transData);
 	printf(".\n.\n.\n.\n");
 
-
-
-
 	strcpy(transData.terminalData.transactionDate, "10/04/2023");
 	strcpy(transData.cardHolderData.cardHolderName, "Ahmed Mohamed Hesham");
 	strcpy(transData.cardHolderData.primaryAcountNumber, "9999888877776666");
