@@ -1,7 +1,12 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NONSTDC_NO_WARNINGS
+
 #ifndef CARD_H
 #define CARD_H
 #include "..\Lib\standardTypes.h"
 #include "stdio.h"
+#include "string.h"
+
 typedef struct ST_cardData_t
 {
     uint8_t cardHolderName[25];

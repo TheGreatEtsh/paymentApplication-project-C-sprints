@@ -1,6 +1,10 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NONSTDC_NO_WARNINGS
+
 #include "..\Card\card.h"
+#include <string.h>
 //#include "terminal_test.h"
 typedef struct ST_terminalData_t
 {

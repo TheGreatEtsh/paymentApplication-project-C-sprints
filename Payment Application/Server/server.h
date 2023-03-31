@@ -42,6 +42,8 @@ typedef struct ST_accountsDB_t
 	uint8_t primaryAccountNumber[20];
 }ST_accountsDB_t;
 
+
+
 EN_transState_t		recieveTransactionData(ST_transaction_t* transData);
 EN_serverError_t	isValidAccount(ST_cardData_t* cardData, ST_accountsDB_t* accountRefrence);
 EN_serverError_t	isBlockedAccount(ST_accountsDB_t* accountRefrence);
