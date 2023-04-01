@@ -8,7 +8,13 @@
 #include "../Terminal/terminal.h"
 #include "../Server/server.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <Windows.h>
 
+void Menu();
+void GoBackOrExit();
+void ExitProject();
+void appStart(void);
 void userStory(void);
 
 #endif // !APP_H

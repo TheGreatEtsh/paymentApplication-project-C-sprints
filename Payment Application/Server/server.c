@@ -122,9 +122,15 @@ EN_serverError_t saveTransaction(ST_transaction_t* transData)
 void listSavedTransactions(void)
 {
 	uint8_t transactionIndex = 0;
-	printf("TransactionSequence | TransactionDate | CardHolderName | \tPAN\t | TransactionAmount | TransactionState\n");
+	//printf("TransactionSequence | TransactionDate | CardHolderName | \tPAN\t | TransactionAmount | TransactionState\n");
+
+	printf("|===|====================|==============================|=====================|==============|=====================|\n");
+	printf("|Seq|        Date        |            Name              |         PAN         |    Amount    |        State        |\n");
+	printf("|===|====================|==============================|=====================|==============|=====================|\n");
+
 	while (transactionData[transactionIndex].transactionSequenceNumber)
 	{
+		/*
 		printf("%d| %s | %s | %s | %0.1f | ", transactionData[transactionIndex].transactionSequenceNumber
 											, transactionData[transactionIndex].terminalData.transactionDate
 											, transactionData[transactionIndex].cardHolderData.cardHolderName
@@ -139,6 +145,24 @@ void listSavedTransactions(void)
 		case FRAUD_CARD:					printf("FRAUD_CARD\n");						break;
 		case INTERNAL_SERVER_ERROR:			printf("INTERNAL_SERVER_ERROR\n");			break;
 		}
+		*/
+		printf("%d|     %s     |    %s    |     %s     |     %0.1f     |"
+			, transactionData[transactionIndex].transactionSequenceNumber
+			, transactionData[transactionIndex].terminalData.transactionDate
+			, transactionData[transactionIndex].cardHolderData.cardHolderName
+			, transactionData[transactionIndex].cardHolderData.primaryAcountNumber
+			, transactionData[transactionIndex].terminalData.transAmount);
+
+
+		switch (transactionData[transactionIndex].transState)
+		{
+		case APPROVED:						printf("APPROVED\n");						break;
+		case DECLINED_INSUFFECIENT_FUND:	printf("DECLINED_INSUFFECIENT_FUND\n");		break;
+		case DECLINED_STOLEN_CARD:			printf("DECLINED_STOLEN_CARD\n");			break;
+		case FRAUD_CARD:					printf("FRAUD_CARD\n");						break;
+		case INTERNAL_SERVER_ERROR:			printf("INTERNAL_SERVER_ERROR\n");			break;
+		}
+
 		transactionIndex++;
 	}
 }

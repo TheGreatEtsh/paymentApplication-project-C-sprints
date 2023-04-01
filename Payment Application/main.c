@@ -1,7 +1,10 @@
 #include "Application/app.h"
 int main()
 {
-	userStory();
+	while (1)
+	{
+		appStart();
+	}
 	return 0;
 
 }
