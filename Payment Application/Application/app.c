@@ -15,9 +15,10 @@ void Menu()
 /*------------------------------------------------------------------------*/
 void GoBackOrExit()
 {
-	getchar();
+	//getchar();
 	char Option;
 	printf(" Go back(b)? or Exit(0)?: ");
+	 fflush(stdin);
 	scanf("%c", &Option);
 	if (Option == '0')
 	{
