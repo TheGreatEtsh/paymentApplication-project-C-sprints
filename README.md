@@ -24,11 +24,11 @@ If not, it will save these enteries in the transaction data structure.
 ### 3- Server Module
 This module will recieve the transaction data structure sent from card module and terminal module and then checks on:
 
-1- If primary account number is valid.
+1 - If primary account number is valid.
 
-2- If that account's balance is available for transaction.
+2 - If that account's balance is available for transaction.
 
-3- If that account's card is not blocked.
+3 - If that account's card is not blocked.
 
 Then return those states and then if the server is ok it will subtract the transaction amount from the account's balance.
 
