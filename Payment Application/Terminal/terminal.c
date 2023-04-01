@@ -98,7 +98,7 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
   //  printf(" \nReceived Transaction Date  %s\n",termData->transactionDate);
     strmm_t[0]=termData->transactionDate[3]; //m
     strmm_t[1]=termData->transactionDate[4]; //mm
-    stryy_t[2]=0;
+    strmm_t[2]=0;
     mm_t=atoi(strmm_t);
     stryy_t[0]=termData->transactionDate[8]; //y
     stryy_t[1]=termData->transactionDate[9]; //yy
@@ -110,7 +110,7 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
     /////////////////////////////////////////////////////////////////////////////
     strmm_c[0]=cardData->cardExpirationData[0]; //m
     strmm_c[1]=cardData->cardExpirationData[1]; //mm
-    stryy_c[2]=0;
+    strmm_c[2]=0;
     mm_c=atoi(strmm_c);
     stryy_c[0]=cardData->cardExpirationData[3]; //y
     stryy_c[1]=cardData->cardExpirationData[4]; //yy
